@@ -1,13 +1,77 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+html {
+    box-sizing: border-box;
+    font-size: 50%; /* 1rem = 8px */
+}
+
+body {
+    font-family: "Lato", sans-serif;
+    padding: 0;
+    min-height: 100vh;
+}
+
+.container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 3rem;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+    flex-basis: auto;
+}
+
+.main {
+    background-color: #f8f9fa;
+    padding: 1.2rem 1.8rem;
+    height: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.form {
+    margin-top: auto;
+}
+
+.logo {
+    display: flex;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.logo__box {
+    padding: 0.2rem 0.6rem;
+}
+
+.logo__box--firebase {
+    background-color: #74c0fc;
+    background-color: #4dabf7;
+}
+
+.logo__box--react {
+    background-color: #ffe066;
+    background-color: #ffd43b;
+}
+
+.logo__icon {
+    font-size: 2.6rem;
+}
+
+.logo__icon--react {
+    color: #339af0;
+}
+
+.logo__icon--firebase {
+    color: #fcc419;
 }
