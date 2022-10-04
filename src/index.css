@@ -21,57 +21,97 @@ body {
     flex-direction: column;
 }
 
+.btn {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-family: inherit;
+    padding: 0.6rem 1.2rem;
+    font-size: 1.6rem;
+    font-weight: 700;
+    border-radius: 5px;
+    transition: opacity 0.2s;
+}
+
+.btn:hover {
+    opacity: 0.8;
+}
+
+.btn--login {
+    background-color: #d0ebff;
+    color: #1864ab;
+}
+
+.btn--submit {
+    background-color: #fff3bf;
+    color: #e67700;
+}
+
 .header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 1rem 3rem;
-    background-color: #f8f9fa;
+    /* background-color: #f8f9fa; */
     border-bottom: 1px solid #e9ecef;
     flex-basis: auto;
 }
 
 .main {
     background-color: #f8f9fa;
-    padding: 1.2rem 1.8rem;
     height: 100%;
     flex: 1;
     display: flex;
     flex-direction: column;
 }
 
-.form {
+.messages-section {
+    padding: 1.2rem 3.2rem;
+    flex: 1;
+}
+
+.form-section {
     margin-top: auto;
+    border-top: 1px solid #e9ecef;
+}
+
+.form {
+    display: flex;
+    padding: 1.4rem 1.8rem;
+    gap: 1.4rem;
+}
+
+.input {
+    display: block;
+    border: none;
+    background: none;
+    flex: 1;
+    padding: 0.8rem 1.6rem;
+    font-family: inherit;
+    color: #343a40;
+    font-size: 1.6rem;
+    font-weight: 400;
+    background-color: #f1f3f5;
+    border-radius: 5px;
+}
+
+.input::placeholder {
+    color: #adb5bd;
 }
 
 .logo {
     display: flex;
-    border-radius: 4px;
-    overflow: hidden;
-}
-
-.logo__box {
-    padding: 0.2rem 0.6rem;
-}
-
-.logo__box--firebase {
-    background-color: #74c0fc;
-    background-color: #4dabf7;
-}
-
-.logo__box--react {
-    background-color: #ffe066;
-    background-color: #ffd43b;
+    align-items: center;
+    gap: 0.8rem;
 }
 
 .logo__icon {
-    font-size: 2.6rem;
-}
-
-.logo__icon--react {
+    font-size: 2rem;
     color: #339af0;
 }
 
-.logo__icon--firebase {
-    color: #fcc419;
+.logo__text {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #339af0;
 }
