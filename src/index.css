@@ -4,6 +4,10 @@
     box-sizing: inherit;
 }
 
+*:focus {
+    outline: none;
+}
+
 html {
     box-sizing: border-box;
     font-size: 50%; /* 1rem = 8px */
@@ -30,7 +34,7 @@ body {
     font-size: 1.6rem;
     font-weight: 700;
     border-radius: 5px;
-    transition: opacity 0.2s;
+    /* transition: opacity 0.2s; */
 }
 
 .btn:hover {
@@ -42,9 +46,23 @@ body {
     color: #1864ab;
 }
 
+.btn--login:focus {
+    background-color: #d0ebff;
+    color: #1864ab;
+    outline: 3px solid #74c0fc;
+    outline-offset: 2px;
+}
+
 .btn--submit {
     background-color: #fff3bf;
     color: #e67700;
+}
+
+.btn--submit:focus {
+    background-color: #fff3bf;
+    color: #e67700;
+    outline: 3px solid #ffe066;
+    outline-offset: 2px;
 }
 
 .header {
@@ -52,7 +70,6 @@ body {
     align-items: center;
     justify-content: space-between;
     padding: 1rem 3rem;
-    /* background-color: #f8f9fa; */
     border-bottom: 1px solid #e9ecef;
     flex-basis: auto;
 }
@@ -88,11 +105,15 @@ body {
     flex: 1;
     padding: 0.8rem 1.6rem;
     font-family: inherit;
-    color: #343a40;
+    color: #495057;
     font-size: 1.6rem;
-    font-weight: 400;
     background-color: #f1f3f5;
     border-radius: 5px;
+}
+
+.input:focus {
+    outline: 3px solid #dee2e6;
+    outline-offset: 2px;
 }
 
 .input::placeholder {
