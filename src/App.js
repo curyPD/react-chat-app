@@ -89,7 +89,7 @@ export default function App() {
             <img
                 className="message__picture"
                 src={message.photoURL}
-                alt={`${message.name}'s profile picture`}
+                alt={`${message.name}`}
             />
             <p className="message__text">{message.text}</p>
         </li>
