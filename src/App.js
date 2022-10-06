@@ -9,49 +9,40 @@ import {
     onAuthStateChanged,
     signOut,
 } from "firebase/auth";
-import { getDatabase, ref, set, push, onValue, get } from "firebase/database";
+import { getDatabase, ref, set, push, onValue } from "firebase/database";
 
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
-const database = getDatabase();
+const database = getDatabase(app);
 
 export default function App() {
     const [curUser, setCurUser] = useState(null);
-    // const [messages, setMessages] = useState([]);
+    const [messages, setMessages] = useState([]);
     const [input, setInput] = useState("");
 
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
-            console.log(user);
             setCurUser(user);
         });
-        /*const dbRef = ref(database, "messages");
-        onValue(dbRef, (snapshot) => {
-            // const arr = [];
-            snapshot.forEach(async (childSnapshot) => {
-                const childKey = childSnapshot.key;
-                const { sender, message } = childSnapshot.val();
-                let senderName, senderPhotoURL;
-                const userSnapshot = await get(
-                    ref(database, `users/${sender}`)
-                );
-                if (userSnapshot.exists()) {
-                    const userData = userSnapshot.val();
-                    senderName = userData.userName;
-                    senderPhotoURL = userData.photoURL;
-                } else {
-                    senderName = "Unknown user";
-                }
-                console.log(message, senderName, senderPhotoURL, childKey);
-                // arr.push({ message, senderName, senderPhotoURL, childKey });
-                setMessages((prevMessages) => [
-                    ...prevMessages,
-                    { message, senderName, senderPhotoURL, childKey },
-                ]);
+        onValue(ref(database, "messages"), (snapshot) => {
+            const futureState = [];
+            snapshot.forEach((child) => {
+                const key = child.key;
+                const value = child.val();
+                const {
+                    message,
+                    sender: { senderId, senderName, senderPhotoURL },
+                } = value;
+                futureState.push({
+                    key,
+                    text: message,
+                    userId: senderId,
+                    name: senderName,
+                    photoURL: senderPhotoURL,
+                });
             });
-            // console.log(arr);
-            // setMessages(arr);
-        });*/
+            setMessages(futureState);
+        });
     }, []);
 
     function handleChange(e) {
@@ -60,10 +51,11 @@ export default function App() {
 
     function handleSubmit(e) {
         e.preventDefault();
-        const message = input;
-        const sender = curUser.uid;
         setInput("");
-        writeMessageData(message, sender);
+        const senderName = curUser.displayName;
+        const senderPhotoURL = curUser.photoURL;
+        const senderId = curUser.uid;
+        writeMessageData(input, { senderName, senderPhotoURL, senderId });
     }
 
     function writeMessageData(message, sender) {
@@ -75,18 +67,9 @@ export default function App() {
         });
     }
 
-    function writeUserData(uid, userName, photoURL) {
-        set(ref(database, `users/${uid}`), {
-            userName,
-            photoURL,
-        });
-    }
-
     async function logIn() {
         try {
-            const result = await signInWithPopup(auth, provider);
-            const { displayName, photoURL, uid } = result.user;
-            writeUserData(uid, displayName, photoURL);
+            await signInWithPopup(auth, provider);
         } catch (error) {
             const errorCode = error.code;
             const errorMessage = error.message;
@@ -96,8 +79,24 @@ export default function App() {
         }
     }
 
+    const messageItems = messages.map((message) => (
+        <li
+            key={message.key}
+            className={`message ${
+                message.userId === curUser.uid ? "message--left" : ""
+            }`}
+        >
+            <img
+                className="message__picture"
+                src={message.photoURL}
+                alt={`${message.name}'s profile picture`}
+            />
+            <p className="message__text">{message.text}</p>
+        </li>
+    ));
+
     return (
-        <div className="container">
+        <>
             <header className="header">
                 <div className="logo">
                     <IoChatbubbleEllipses className="logo__icon" />
@@ -120,7 +119,9 @@ export default function App() {
             </header>
 
             <main className="main">
-                <section className="messages-section"></section>
+                <section className="messages-section">
+                    <ol className="messages">{messageItems}</ol>
+                </section>
                 {curUser && (
                     <section className="form-section">
                         <form className="form" onSubmit={handleSubmit}>
@@ -137,6 +138,6 @@ export default function App() {
                     </section>
                 )}
             </main>
-        </div>
+        </>
     );
 }
