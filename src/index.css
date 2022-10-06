@@ -197,12 +197,14 @@ body {
 
 .btn.btn--big {
     padding: 0.8rem 0;
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: 700;
     border-radius: 6px;
     background-color: #228be6;
     color: #fff;
-    width: 100%;
+    width: 60%;
+    display: block;
+    margin: 0 auto;
 }
 
 .popup {
@@ -233,7 +235,7 @@ body {
     }
 
     .popup__text {
-        font-size: 1.8rem;
+        font-size: 2rem;
         margin-bottom: 2.6rem;
     }
 }
