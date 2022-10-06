@@ -83,7 +83,7 @@ export default function App() {
         <li
             key={message.key}
             className={`message ${
-                message.userId === curUser.uid ? "message--left" : ""
+                message.userId === curUser?.uid ? "message--left" : ""
             }`}
         >
             <img
@@ -96,7 +96,7 @@ export default function App() {
     ));
 
     return (
-        <>
+        <div className="app">
             <header className="header">
                 <div className="logo">
                     <IoChatbubbleEllipses className="logo__icon" />
@@ -118,11 +118,12 @@ export default function App() {
                 </button>
             </header>
 
-            <main className="main">
-                <section className="messages-section">
-                    <ol className="messages">{messageItems}</ol>
-                </section>
-                {curUser && (
+            {curUser ? (
+                <main className="main">
+                    <section className="messages-section">
+                        <ol className="messages">{messageItems}</ol>
+                    </section>
+
                     <section className="form-section">
                         <form className="form" onSubmit={handleSubmit}>
                             <input
@@ -136,8 +137,15 @@ export default function App() {
                             <button className="btn btn--submit">Send</button>
                         </form>
                     </section>
-                )}
-            </main>
-        </>
+                </main>
+            ) : (
+                <div className="popup">
+                    <p className="popup__text">Log in to see the messages</p>
+                    <button className="btn btn--big" onClick={() => logIn()}>
+                        Log In
+                    </button>
+                </div>
+            )}
+        </div>
     );
 }
