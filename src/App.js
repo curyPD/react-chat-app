@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { IoChatbubbleEllipses } from "react-icons/io5";
 
 import { app } from "./firebase";
@@ -19,6 +19,7 @@ export default function App() {
     const [curUser, setCurUser] = useState(null);
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState("");
+    const olRef = useRef(null);
 
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
@@ -45,12 +46,20 @@ export default function App() {
         });
     }, []);
 
+    useEffect(() => {
+        olRef.current?.lastElementChild?.scrollIntoView({
+            block: "start",
+            inline: "nearest",
+        });
+    }, [messages]);
+
     function handleChange(e) {
         setInput(e.target.value);
     }
 
     function handleSubmit(e) {
         e.preventDefault();
+        if (!input) return;
         setInput("");
         const senderName = curUser.displayName;
         const senderPhotoURL = curUser.photoURL;
@@ -96,7 +105,7 @@ export default function App() {
     ));
 
     return (
-        <div className="app">
+        <>
             <header className="header">
                 <div className="logo">
                     <IoChatbubbleEllipses className="logo__icon" />
@@ -121,7 +130,9 @@ export default function App() {
             {curUser ? (
                 <main className="main">
                     <section className="messages-section">
-                        <ol className="messages">{messageItems}</ol>
+                        <ol className="messages" ref={olRef}>
+                            {messageItems}
+                        </ol>
                     </section>
 
                     <section className="form-section">
@@ -146,6 +157,6 @@ export default function App() {
                     </button>
                 </div>
             )}
-        </div>
+        </>
     );
 }
